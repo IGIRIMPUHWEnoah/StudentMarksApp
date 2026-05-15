@@ -3,10 +3,10 @@ package com.example.StudentMarksAPP.controller;
 import com.example.StudentMarksAPP.model.StudentMark;
 import com.example.StudentMarksAPP.service.StudentMarkService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/student-marks")
@@ -20,8 +20,18 @@ public class StudentMarkController {
     }
 
     @GetMapping
-    public List<StudentMark> getAllMarks() {
-        return service.getAllMarks();
+    public Page<StudentMark> getAllMarks(Pageable pageable) {
+        return service.getAllMarks(pageable);
+    }
+
+    @GetMapping("/search/jpql")
+    public Page<StudentMark> searchJPQL(@RequestParam String name, Pageable pageable) {
+        return service.searchByJPQL(name, pageable);
+    }
+
+    @GetMapping("/search/native")
+    public Page<StudentMark> searchNative(@RequestParam String name, Pageable pageable) {
+        return service.searchByNative(name, pageable);
     }
 
     @GetMapping("/{id}")

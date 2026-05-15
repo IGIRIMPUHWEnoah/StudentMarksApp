@@ -3,9 +3,10 @@ package com.example.StudentMarksAPP.service;
 import com.example.StudentMarksAPP.model.StudentMark;
 import com.example.StudentMarksAPP.repository.StudentMarkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,8 +19,19 @@ public class StudentMarkService {
         this.repository = repository;
     }
 
-    public List<StudentMark> getAllMarks() {
-        return repository.findAll();
+    // Updated to support pagination and sorting
+    public Page<StudentMark> getAllMarks(Pageable pageable) {
+        return repository.findAll(pageable);
+    }
+
+    // Search using JPQL
+    public Page<StudentMark> searchByJPQL(String name, Pageable pageable) {
+        return repository.findByStudentNameContainingJPQL(name, pageable);
+    }
+
+    // Search using Native Query
+    public Page<StudentMark> searchByNative(String name, Pageable pageable) {
+        return repository.findByStudentNameContainingNative(name, pageable);
     }
 
     public Optional<StudentMark> getMarkById(Long id) {
