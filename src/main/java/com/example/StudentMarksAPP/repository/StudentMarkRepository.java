@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface StudentMarkRepository extends JpaRepository<StudentMark, Long> {
 
@@ -22,4 +24,9 @@ public interface StudentMarkRepository extends JpaRepository<StudentMark, Long> 
            countQuery = "SELECT count(*) FROM student_marks WHERE student_name LIKE %:name%",
            nativeQuery = true)
     Page<StudentMark> findByStudentNameContainingNative(@Param("name") String name, Pageable pageable);
+
+    @Query("SELECT s FROM StudentMark s WHERE s.marks>80")
+    List<StudentMark> findScore();
+
+
 }

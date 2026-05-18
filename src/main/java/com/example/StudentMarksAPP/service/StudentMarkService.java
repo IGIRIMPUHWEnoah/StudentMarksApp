@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -57,5 +58,10 @@ public class StudentMarkService {
         StudentMark mark = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Mark not found with id: " + id));
         repository.delete(mark);
+    }
+
+    public List<StudentMark> getscore(){
+
+        return repository.findScore();
     }
 }

@@ -2,11 +2,15 @@ package com.example.StudentMarksAPP.controller;
 
 import com.example.StudentMarksAPP.model.StudentMark;
 import com.example.StudentMarksAPP.service.StudentMarkService;
+import jakarta.persistence.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.function.EntityResponse;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/student-marks")
@@ -17,6 +21,13 @@ public class StudentMarkController {
     @Autowired
     public StudentMarkController(StudentMarkService service) {
         this.service = service;
+    }
+
+
+
+    @GetMapping("/findOver")
+    List<StudentMark> findbymarks(){
+        return service.getscore();
     }
 
     @GetMapping
